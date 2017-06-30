@@ -18,10 +18,10 @@ const hotMiddleware = require("webpack-hot-middleware")(compiler,{
 });
 
 // force page reload when html-webpack-plugin template changes
-// 因为引入了html模板，所以需要加上这一段来解决代码更改之后浏览器不会自动刷新的问题
+//
 compiler.plugin('compilation', function (compilation) {
     compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-        hotMiddleware.publish({ action: 'reload' });
+        hotMiddleware.publish({ action: 'reload' })
         cb()
     })
 })
@@ -35,7 +35,8 @@ app.use(hotMiddleware);
 
 // var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 // app.use(staticPath, express.static('./static'))
-app.use(express.static('dist'));
+// dev启动时，在内存的虚拟文件夹static里挂载真实的static静态资源。
+app.use('/static', express.static('./static'));
 
 const uri = "http://localhost:" + port;
 

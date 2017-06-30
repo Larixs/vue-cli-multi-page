@@ -9,6 +9,10 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
 
+const distPath = path.resolve(__dirname, '../dist');
+const srcPath =  path.join(__dirname, '../src');
+
+
 const env = process.env.NODE_ENV === "testing"
     ? require("../config/test.env")
     : config.build.env;
@@ -48,4 +52,26 @@ const webpackConfig = merge(baseWebpackConfig, {
         })
     ]
 });
+
+const entries = webpackConfig.entry;
+Object.keys(entries).forEach(function (name){
+    webpackConfig.plugins.push(
+        new HtmlWebpackPlugin({
+            filename: path.resolve(distPath, name, "index.html"),
+            template: path.resolve(srcPath, 'index.html'),
+            inject: true,
+            chunks:[name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
+            minify:{
+                removeComments: true,
+                collapseWhitespace:true,
+                removeAttributeQuotes: true
+            },
+            // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+            // chunksSortMode: 'dependency'
+        })
+    );
+    // add hot-reload related code to entry chunks
+    entries[name] = ["./build/dev-client"].concat(entries[name]);
+});
+
 
