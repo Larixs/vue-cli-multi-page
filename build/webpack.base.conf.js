@@ -6,6 +6,7 @@ const config = require('../config');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
+console.log('isProduction',isProduction);
 const distPath = path.join(__dirname, '../dist');
 const srcPath =  path.join(__dirname, '../src');
 
@@ -52,7 +53,14 @@ module.exports = {
                         }
                     }
                 ],
-
+            },
+            {
+                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000,
+                    name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
+                }
             }
         ]
     },

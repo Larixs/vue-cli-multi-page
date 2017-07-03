@@ -4,7 +4,7 @@ const webpack = require("webpack");
 const config = require("../config");
 const merge = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.conf");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+const FileChanger = require('webpack-file-changer')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
@@ -41,7 +41,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。在cli里面，vendor.js自身的大小为100k，而它的map达到了800k。感觉开销过于大了，故而删掉。嗯~ o(*￣▽￣*)o
         }),
         new ExtractTextPlugin({
-            filename: utils.assetsPath("[name]/[name].[contenthash]/css")
+            filename: utils.assetsPath("[name]/[name].[contenthash].css")
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
@@ -52,7 +52,15 @@ const webpackConfig = merge(baseWebpackConfig, {
                 safe: true
             }
         }),
+
         //没有提取公共代码的部分，正在犹豫是用commonschunkplugin还是dllplugin
+        //移动静态文件夹static
+        new FileChanger({
+            move: [{
+                from: path.resolve(srcPath, "../static"),
+                to: path.resolve(distPath, "static")
+            }]
+        }),
     ]
 });
 
@@ -76,5 +84,8 @@ Object.keys(entries).forEach(function (name){
     // add hot-reload related code to entry chunks
     entries[name] = ["./build/dev-client"].concat(entries[name]);
 });
+
+
+module.exports = webpackConfig;
 
 

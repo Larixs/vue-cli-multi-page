@@ -25,6 +25,10 @@
 </script>
 
 <style>
+    @font-face{
+        font-family:deliciousMocha;
+        src : url("../../static/fonts/DeliciousMocha.ttf");
+    }
     html,body{
         min-height: 100%;
         height:100%;

@@ -1,5 +1,5 @@
-process.en.NODE_ENV = 'production';
-
+process.env.NODE_ENV = 'production';
+//需要在webpackConfig引入之前设置。webpackConfig里涉及到了环境的判断。
 const ora = require('ora');
 const chalk = require('chalk');
 const rm = require('rimraf');
@@ -9,6 +9,8 @@ const config = require('../config');
 const webpackConfig = require("./webpack.prod.conf");
 
 const spinner = ora('building for production...');
+
+
 spinner.start();
 
 //先清空，后在rm的回调函数里build

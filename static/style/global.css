@@ -12,7 +12,3 @@ a:focus{
     //去掉在ff下的虚线框
     outline:0;
 }
-@font-face{
-    font-family:deliciousMocha;
-    src : url("../fonts/DeliciousMocha.ttf");
-}
