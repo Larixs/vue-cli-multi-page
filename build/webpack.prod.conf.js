@@ -11,6 +11,7 @@ const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
 
 const distPath = path.resolve(__dirname, '../dist');
 const srcPath =  path.join(__dirname, '../src');
+const rootPath = path.join(__dirname, '../');
 
 
 const env = process.env.NODE_ENV === "testing"
@@ -31,6 +32,9 @@ const webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath("js/[id]/[id].[chunkhash].js"),
     },
     plugins: [
+        new webpack.DllReferencePlugin({
+            manifest: require( path.resolve(rootPath,"common.manifest.json")),
+        }),
         new webpack.DefinePlugin({
             "process.env": env
         }),
@@ -69,7 +73,7 @@ Object.keys(entries).forEach(function (name){
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             filename: path.resolve(distPath, name, "index.html"),
-            template: path.resolve(srcPath, 'index.html'),
+            template: path.resolve(srcPath, 'index_build.html'),
             inject: true,
             chunks:[name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
             minify:{

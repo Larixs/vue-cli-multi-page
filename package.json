@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:dll": "node build/build-dll.js"
   },
   "author": "",
   "license": "ISC",
@@ -43,7 +44,6 @@
     "vue-compiler": "^2.0.0",
     "vue-loader": "^11.1.4",
     "vue-style-loader": "^2.0.4",
-    "vuex": "^2.2.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-dev-server": "^2.5.0",
@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "vue": "^2.2.4",
-    "vue-router": "^2.3.1"
+    "vue-router": "^2.3.1",
+    "vuex": "^2.3.1"
   }
 }
