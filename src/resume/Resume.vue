@@ -27,7 +27,7 @@
 <style>
     @font-face{
         font-family:deliciousMocha;
-        src : url("../../static/fonts/DeliciousMocha.ttf");
+        src : url("../fonts/DeliciousMocha.ttf");
     }
     html,body{
         min-height: 100%;
