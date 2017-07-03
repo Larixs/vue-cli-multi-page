@@ -3,7 +3,6 @@ const path = require('path');
 const webpack = require('webpack');
 const utils = require('./utils');
 const config = require('../config');
-const FileChanger = require('webpack-file-changer')
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -58,12 +57,6 @@ module.exports = {
         ]
     },
     plugins: [
-        // new FileChanger({//在dev下，这个会生成真实的dist/static文件,而非在内存里操作
-        //     move: [{
-        //         from: path.resolve(srcPath, "static"),
-        //         to: path.resolve(distPath, "static")
-        //     }]
-        // })
     ]
 
 };

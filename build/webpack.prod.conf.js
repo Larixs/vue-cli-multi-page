@@ -45,11 +45,14 @@ const webpackConfig = merge(baseWebpackConfig, {
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
+        // Why optimize-css-assets-webpack-plugin instead of extract-text-webpack-plugin:
+        // Since extract-text-webpack-plugin only bundles (merges) text chunks, if its used to bundle CSS, the bundle might have duplicate entries (chunks can be duplicate free but when merged, duplicate CSS can be created).
         new OptimizeCSSPlugin({
             cssProcessorOptions: {
                 safe: true
             }
-        })
+        }),
+        //没有提取公共代码的部分，正在犹豫是用commonschunkplugin还是dllplugin
     ]
 });
 
