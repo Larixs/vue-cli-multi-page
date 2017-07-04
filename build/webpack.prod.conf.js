@@ -85,8 +85,6 @@ Object.keys(entries).forEach(function (name){
             // chunksSortMode: 'dependency'
         })
     );
-    // add hot-reload related code to entry chunks
-    entries[name] = ["./build/dev-client"].concat(entries[name]);
 });
 
 
