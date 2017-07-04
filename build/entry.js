@@ -1,12 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const srcPath = path.join(__dirname, '../src');
-//commandEntries为自己设定的编译项目名称，从node命令中读取
-const commandEntries = process.argv.slice(2);
+//自定义编译项目。没有对错误的目录名称进行处理，webpack自己会停止（还不是因为我不会中断编译┑(￣Д ￣)┍）。
+let configEntries = [];
 //如果configEntries为空，默认编译所有子项目
 const allEntries = fs.readdirSync(srcPath);
 
-const configEntries = commandEntries.length ? commandEntries : allEntries;
+configEntries = configEntries.length ? configEntries : allEntries;
 module.exports = configEntries.reduce((entries, dir) =>{
     //读取src下的所有文件夹
     const fullDir = path.join(srcPath, dir);
