@@ -9,7 +9,6 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
 
-const distPath = path.resolve(__dirname, '../dist');
 const srcPath =  path.join(__dirname, '../src');
 const rootPath = path.join(__dirname, '../');
 
@@ -26,7 +25,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         })
     },
     devtool: config.build.productionSourceMap ? "#source-map" : false,
-    output: {//
+    output: {
         path: config.build.assetsRoot,
         filename: utils.assetsPath("js/[name]/[name].[chunkhash].js"),
         chunkFilename: utils.assetsPath("js/[id]/[id].[chunkhash].js"),
@@ -42,7 +41,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             compress: {
                 warnings: false
             },
-            sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。在cli里面，vendor.js自身的大小为100k，而它的map达到了800k。感觉开销过于大了，故而删掉。嗯~ o(*￣▽￣*)o
+            sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。
         }),
         new ExtractTextPlugin({
             filename: utils.assetsPath("css/[name]/[name].[contenthash].css")
@@ -62,7 +61,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         new FileChanger({
             move: [{
                 from: path.resolve(srcPath, "../static"),
-                to: path.resolve(distPath, "static")
+                to: path.resolve(config.build.assetsRoot, "static")
             }]
         }),
     ]
@@ -72,7 +71,7 @@ const entries = webpackConfig.entry;
 Object.keys(entries).forEach(function (name){
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            filename: path.resolve(distPath, name+".html"),
+            filename: path.resolve(config.build.assetsRoot, name+".html"),
             template: path.resolve(srcPath, 'index_build.html'),
             inject: true,
             chunks:[name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
