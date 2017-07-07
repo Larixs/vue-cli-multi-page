@@ -24,7 +24,7 @@ Object.keys(entries).forEach(function (name){
     devconfig.plugins.push(
         new HtmlWebpackPlugin({
             filename: path.resolve(distPath, name, "index.html"),
-            template: path.resolve(srcPath, 'index_dev.html'),
+            template: path.resolve(srcPath, 'index.html'),
             inject: true,
             chunks:[name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
         })
