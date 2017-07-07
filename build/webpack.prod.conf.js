@@ -27,8 +27,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? "#source-map" : false,
     output: {
         path: config.build.assetsRoot,
-        filename: utils.assetsPath("js/[name]/[name].[chunkhash].js"),
-        chunkFilename: utils.assetsPath("js/[id]/[id].[chunkhash].js"),
+        filename: utils.assetsPath("js/licai_h5/[name]/[name].js?[chunkhash]"),
+        chunkFilename: utils.assetsPath("js/licai_h5/[id]/[id].js?[chunkhash]"),
     },
     plugins: [
         new webpack.DllReferencePlugin({
@@ -44,7 +44,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。
         }),
         new ExtractTextPlugin({
-            filename: utils.assetsPath("css/[name]/[name].[contenthash].css")
+            filename: utils.assetsPath("css/licai_h5/[name]/[name].css?[contenthash]")
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
