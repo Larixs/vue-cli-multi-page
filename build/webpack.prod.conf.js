@@ -8,8 +8,8 @@ const FileChanger = require('webpack-file-changer')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
-
-const srcPath =  path.join(__dirname, '../src');
+const externalFile = require("./external_link");
+const srcPath = path.join(__dirname, '../src');
 const rootPath = path.join(__dirname, '../');
 
 
@@ -27,12 +27,12 @@ const webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? "#source-map" : false,
     output: {
         path: config.build.assetsRoot,
-        filename: utils.assetsPath("js/licai_h5/[name]/[name].js?[chunkhash]"),
-        chunkFilename: utils.assetsPath("js/licai_h5/[id]/[id].js?[chunkhash]"),
+        filename: utils.assetsPath("[name]/[name].js?[chunkhash]"),
+        chunkFilename: utils.assetsPath("[id]/[id].js?[chunkhash]"),
     },
     plugins: [
         new webpack.DllReferencePlugin({
-            manifest: require( path.resolve(rootPath,"common.manifest.json")),
+            manifest: require(path.resolve(rootPath, "common.manifest.json")),
         }),
         new webpack.DefinePlugin({
             "process.env": env
@@ -44,7 +44,7 @@ const webpackConfig = merge(baseWebpackConfig, {
             sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。
         }),
         new ExtractTextPlugin({
-            filename: utils.assetsPath("css/licai_h5/[name]/[name].css?[contenthash]")
+            filename: utils.assetsPath("[name]/[name].css?[contenthash]")
         }),
         // Compress extracted CSS. We are using this plugin so that possible
         // duplicated CSS from different components can be deduped.
@@ -71,13 +71,13 @@ const entries = webpackConfig.entry;
 Object.keys(entries).forEach(function (name){
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            filename: path.resolve(config.build.assetsRoot, name+".html"),
+            filename: path.resolve(config.build.assetsRoot, name, name + ".html"),
             template: path.resolve(srcPath, 'index_build.html'),
             inject: true,
-            chunks:[name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
-            minify:{
+            chunks: [name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
+            minify: {
                 removeComments: true,
-                collapseWhitespace:true,
+                collapseWhitespace: true,
                 removeAttributeQuotes: true
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
@@ -85,6 +85,30 @@ Object.keys(entries).forEach(function (name){
         })
     );
 });
+
+class putDllInHtml {
+    apply(compiler){
+        compiler.plugin("compilation", compilation =>{
+            compilation.plugin(
+                "html-webpack-plugin-before-html-generation",
+                (htmlPluginData, callback) =>{
+                    console.log(htmlPluginData.assets.js);
+                    Object.keys(externalFile.jsLink).forEach(function (name){
+                        if ( htmlPluginData.assets.js[0].includes(name) ) {
+                            htmlPluginData.assets.js = Array.prototype.concat(
+                                externalFile.jsLink[name],
+                                htmlPluginData.assets.js
+                            );
+                        }
+                    })
+                    callback();
+                }
+            )
+        })
+    }
+}
+;
+webpackConfig.plugins.push(new putDllInHtml());
 
 
 module.exports = webpackConfig;

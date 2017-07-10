@@ -7,7 +7,6 @@ const path = require('path');
 const webpack = require('webpack');
 const config = require('../config');
 const webpackConfig = require("./webpack.prod.conf");
-const webpackDllConfig = require("./webpack.dll.conf");
 
 const spinner = ora('building for production...');
 
@@ -17,7 +16,7 @@ spinner.start();
 //先清空，后在rm的回调函数里build
 rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err =>{
     if ( err ) throw err;
-    webpack([webpackDllConfig,webpackConfig], function (err, stats){
+    webpack(webpackConfig, function (err, stats){
         spinner.stop();
         if ( err ) throw err;
         process.stdout.write(stats.toString({
