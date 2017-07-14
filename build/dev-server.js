@@ -3,9 +3,10 @@ const express = require("express");
 const webpack = require("webpack");
 const opn = require('opn')
 const webpackConfig = require("./webpack.dev.conf");
-const port = process.env.PORT || config.dev.port;
+const port = process.argv[3] || config.dev.port;
 const autoOpenBrowser = config.dev.autoOpenBrowser;
 const path = require('path');
+const proxyMiddleware = require('http-proxy-middleware');
 
 const app = express();
 const compiler = webpack(webpackConfig);
@@ -17,6 +18,10 @@ const hotMiddleware = require("webpack-hot-middleware")(compiler,{
     log: ()=>{}
 });
 
+const proxyTable = config.dev.proxyTable;
+
+
+
 // force page reload when html-webpack-plugin template changes
 //
 compiler.plugin('compilation', function (compilation) {
@@ -25,6 +30,16 @@ compiler.plugin('compilation', function (compilation) {
         cb()
     })
 })
+
+
+// proxy api requests
+Object.keys(proxyTable).forEach(function (context) {
+    let options = proxyTable[context]
+    if (typeof options === 'string') {
+        options = { target: options }
+    }
+    app.use(proxyMiddleware(options.filter || context, options))
+});
 
 // handle fallback for HTML5 history API
 app.use(require('connect-history-api-fallback')());

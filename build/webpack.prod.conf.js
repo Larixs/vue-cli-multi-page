@@ -8,7 +8,7 @@ const FileChanger = require('webpack-file-changer')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
-const externalFile = require("./external_link");
+const indexPageConfig = require("./indexPageConfig");
 const srcPath = path.join(__dirname, '../src');
 const rootPath = path.join(__dirname, '../');
 
@@ -72,9 +72,10 @@ Object.keys(entries).forEach(function (name){
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
             filename: path.resolve(config.build.assetsRoot, name, name + ".html"),
-            template: path.resolve(srcPath, 'index_build.html'),
+            template: path.resolve(srcPath, 'index_build.ejs'),
             inject: true,
             chunks: [name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
+            title: indexPageConfig.title[[name]] || indexPageConfig.defaultTitle,
             minify: {
                 removeComments: true,
                 collapseWhitespace: true,
@@ -85,30 +86,6 @@ Object.keys(entries).forEach(function (name){
         })
     );
 });
-
-class putDllInHtml {
-    apply(compiler){
-        compiler.plugin("compilation", compilation =>{
-            compilation.plugin(
-                "html-webpack-plugin-before-html-generation",
-                (htmlPluginData, callback) =>{
-                    console.log(htmlPluginData.assets.js);
-                    Object.keys(externalFile.jsLink).forEach(function (name){
-                        if ( htmlPluginData.assets.js[0].includes(name) ) {
-                            htmlPluginData.assets.js = Array.prototype.concat(
-                                externalFile.jsLink[name],
-                                htmlPluginData.assets.js
-                            );
-                        }
-                    })
-                    callback();
-                }
-            )
-        })
-    }
-}
-;
-webpackConfig.plugins.push(new putDllInHtml());
 
 
 module.exports = webpackConfig;

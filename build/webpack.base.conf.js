@@ -4,10 +4,11 @@ const webpack = require('webpack');
 const utils = require('./utils');
 const config = require('../config');
 const configEntries = require('./entry');
+const externalFile = require("./external_link");
 const isProduction = process.env.NODE_ENV === 'production';
 const distPath = path.join(__dirname, '../dist');
 
-module.exports = {
+const webpackConfig= {
     devtool: 'inline-source-map',
 
     entry: configEntries,
@@ -56,12 +57,42 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 10000,
-                    name: utils.assetsPath('img/[name].[ext]?[hash:7]')
+                    name: utils.assetsPath('[path][name].[ext]?[hash:7]')
                 }
             },
         ]
     },
     plugins: [
-    ]
-
+    ],
+    resolve:{
+        alias:{
+            'components': path.join(process.cwd(), './src/components'),
+            'static': path.join(process.cwd(), './static')
+        }
+    }
 };
+
+
+class putExternalFileInHtml {
+    apply(compiler){
+        compiler.plugin("compilation", compilation =>{
+            compilation.plugin(
+                "html-webpack-plugin-before-html-generation",
+                (htmlPluginData, callback) =>{
+                    Object.keys(externalFile.jsLink).forEach(function (name){
+                        if ( htmlPluginData.assets.js[0].includes(name) ) {
+                            htmlPluginData.assets.js = Array.prototype.concat(
+                                externalFile.jsLink[name],
+                                htmlPluginData.assets.js
+                            );
+                        }
+                    });
+                    callback();
+                }
+            )
+        })
+    }
+}
+webpackConfig.plugins.push(new putExternalFileInHtml());
+
+module.exports = webpackConfig;

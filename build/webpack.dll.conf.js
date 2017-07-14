@@ -12,7 +12,7 @@ module.exports = {
         path: path.resolve(rootPath,"static/js/dll"),
         filename: "[name].js?[chunkhash]",
         library: '[name]_library',
-        publicPath: "/static/lib/licai_dll"
+        publicPath: "/static/js/dll"
     },
     plugins: [
         new webpack.DllPlugin({
@@ -25,9 +25,10 @@ module.exports = {
             }
         }),
         new HtmlWebpackPlugin({
-            filename: path.resolve(srcPath, "index_build.html"),
-            template: path.resolve(srcPath, 'index.html'),
+            filename: path.resolve(srcPath, "index_build.ejs"),
+            template: path.resolve(srcPath, 'index.ejs'),
             inject: true,
+            title:"<%= htmlWebpackPlugin.options.title %>",
         })
     ]
 }
