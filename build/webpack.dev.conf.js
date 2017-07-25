@@ -4,12 +4,17 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const utils = require("./utils");
 const indexPageConfig = require("./indexPageConfig");
 const distPath = path.resolve(__dirname, '../dist');
 const srcPath =  path.join(__dirname, '../src');
 const rootPath = path.join(__dirname, '../');
 
 const devconfig = merge(baseWebpackConfig, {
+    module:{
+        rules: utils.styleModuleLoader({extract:false}),
+    },
     output:{
       path: path.resolve(distPath, process.argv[2]),//从命令行读取项目名称
     },
@@ -23,6 +28,9 @@ const devconfig = merge(baseWebpackConfig, {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
         new FriendlyErrorsPlugin(),
+        new ExtractTextPlugin({
+            filename: utils.assetsPath("[name]/[name].css")
+        }),
     ]
 });
 

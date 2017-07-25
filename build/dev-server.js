@@ -64,7 +64,7 @@ console.log('> Starting dev server...');
 devMiddleware.waitUntilValid(()=>{
     console.log("> Listening at " + uri + '\n');
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
-        opn(uri)
+        // opn(uri)
     }
     _resolve();
 });

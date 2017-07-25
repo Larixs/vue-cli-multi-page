@@ -7,6 +7,8 @@ const configEntries = require('./entry');
 const externalFile = require("./external_link");
 const isProduction = process.env.NODE_ENV === 'production';
 const distPath = path.join(__dirname, '../dist');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 const webpackConfig= {
     devtool: 'inline-source-map',
@@ -23,7 +25,7 @@ const webpackConfig= {
     module: {
         rules: [
             {
-                test:/\.js$/,
+                test:/\.js(x)?$/,
                 use:["babel-loader"],
                 exclude:/node_modules/
             },
@@ -60,6 +62,12 @@ const webpackConfig= {
                     name: utils.assetsPath('[path][name].[ext]?[hash:7]')
                 }
             },
+            {
+                test:/\.css$/,
+                loader:'style-loader!css-loader',
+                include:/node_modules/,
+            },
+
         ]
     },
     plugins: [
