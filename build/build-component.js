@@ -1,4 +1,3 @@
-process.env.NODE_ENV = 'production';
 //需要在webpackConfig引入之前设置。webpackConfig里涉及到了环境的判断。
 const ora = require('ora');
 const chalk = require('chalk');
@@ -6,11 +5,11 @@ const rm = require('rimraf');
 const path = require('path');
 const webpack = require('webpack');
 const config = require('../config');
-const webpackConfig = require("./webpack.prod.conf");
-const configEntries = require('./entry');
+const webpackConfig = require("./webpack.prod.comp.conf");
 const utils = require("./utils");
-const spinner = ora('building for production...');
+const configEntries = require('./entry');
 
+const spinner = ora('building for production of component...');
 
 spinner.start();
 
@@ -27,7 +26,7 @@ p.then(function (){
         if ( err ) throw err;
     });
     //清空对应的html、js、css
-    utils.rmProject(Object.keys(configEntries));
+    utils.rmComponent(Object.keys(configEntries));
 }).then(function (){
     webpack(webpackConfig, function (err, stats){
         spinner.stop();
@@ -46,7 +45,4 @@ p.then(function (){
             '  Opening index.html over file:// won\'t work.\n'
         ))
     })
-});
-p.catch(function (err){
-    throw err;
 });

@@ -7,10 +7,9 @@ const configEntries = require('./entry');
 const externalFile = require("./external_link");
 const isProduction = process.env.NODE_ENV === 'production';
 const distPath = path.join(__dirname, '../dist');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const merge = require("webpack-merge");
 
-
-const webpackConfig= {
+let webpackConfig= {
     devtool: 'inline-source-map',
 
     entry: configEntries,
@@ -102,5 +101,11 @@ class putExternalFileInHtml {
     }
 }
 webpackConfig.plugins.push(new putExternalFileInHtml());
+
+webpackConfig = merge(webpackConfig,{
+    module:{
+        rules: utils.styleModuleLoader({extract:isProduction}),
+    },
+});
 
 module.exports = webpackConfig;

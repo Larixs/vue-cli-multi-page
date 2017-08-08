@@ -12,9 +12,6 @@ const srcPath =  path.join(__dirname, '../src');
 const rootPath = path.join(__dirname, '../');
 
 const devconfig = merge(baseWebpackConfig, {
-    module:{
-        rules: utils.styleModuleLoader({extract:false}),
-    },
     output:{
       path: path.resolve(distPath, process.argv[2]),//从命令行读取项目名称
     },

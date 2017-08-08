@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node build/test.js",
     "start": "node build/dev-server.js",
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
-    "build:dll": "node build/build-dll.js"
+    "build:dll": "node build/build-dll.js",
+    "build:comp": "node build/build-component.js",
+    "rm": "node build/rm-project.js"
   },
   "author": "",
   "license": "ISC",
@@ -22,8 +24,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-plugin-transform-vue-jsx": "^3.4.3",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-es2015-rollup": "^3.0.0",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-stage-2": "^6.22.0",
     "babel-runtime": "^6.23.0",
     "chalk": "^1.1.3",

@@ -6,11 +6,8 @@ const merge = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.conf");
 const FileChanger = require('webpack-file-changer')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
 const indexPageConfig = require("./indexPageConfig");
 const srcPath = path.join(__dirname, '../src');
-const rootPath = path.join(__dirname, '../');
 
 
 const env = process.env.NODE_ENV === "testing"
@@ -21,13 +18,10 @@ const webpackConfig = merge(baseWebpackConfig, {
     devtool: config.build.productionSourceMap ? "#source-map" : false,
     output: {
         path: config.build.assetsRoot,
-        filename: utils.assetsPath("js/licai_h5/[name]/[name].js?[chunkhash]"),
-        chunkFilename: utils.assetsPath("js/licai_h5/[id]/[id].js?[chunkhash]"),
+        filename: utils.assetsPath("js/licai_h5/vue_components/[name]/[name].js?[chunkhash]"),
+        chunkFilename: utils.assetsPath("js/licai_h5/vue_components/[id]/[id].js?[chunkhash]"),
     },
     plugins: [
-        new webpack.DllReferencePlugin({
-            manifest: require(path.resolve(rootPath, "common.manifest.json")),
-        }),
         new webpack.DefinePlugin({
             "process.env": env
         }),
@@ -37,20 +31,6 @@ const webpackConfig = merge(baseWebpackConfig, {
             },
             sourceMap: false //压缩成一行后的代码如果出错了，可以用map定位到出错点。不过相应的会增加map文件。
         }),
-        new ExtractTextPlugin({
-            filename: utils.assetsPath("css/licai_h5/[name]/[name].css?[contenthash]")
-        }),
-        // Compress extracted CSS. We are using this plugin so that possible
-        // duplicated CSS from different components can be deduped.
-        // Why optimize-css-assets-webpack-plugin instead of extract-text-webpack-plugin:
-        // Since extract-text-webpack-plugin only bundles (merges) text chunks, if its used to bundle CSS, the bundle might have duplicate entries (chunks can be duplicate free but when merged, duplicate CSS can be created).
-        new OptimizeCSSPlugin({
-            cssProcessorOptions: {
-                safe: true
-            }
-        }),
-
-        //没有提取公共代码的部分，正在犹豫是用commonschunkplugin还是dllplugin
         //移动静态文件夹static
         new FileChanger({
             move: [{
@@ -65,15 +45,13 @@ const entries = webpackConfig.entry;
 Object.keys(entries).forEach(function (name){
     webpackConfig.plugins.push(
         new HtmlWebpackPlugin({
-            filename: path.resolve(config.build.assetsRoot, name, name + ".html"),
-            template: path.resolve(srcPath, 'index_build.ejs'),
+            filename: path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "vue_components/" + name, name + ".html"),
+            template: path.resolve(srcPath, 'index_comp.ejs'),
             inject: true,
             chunks: [name], //让各自文件的html引用各自的js，不会把所有的js文件都用上
-            title: indexPageConfig.title[[name]] || indexPageConfig.defaultTitle,
+            app: indexPageConfig.app[[name]] || indexPageConfig.defaultApp,
             minify: {
                 removeComments: true,
-                collapseWhitespace: true,
-                removeAttributeQuotes: true
             },
             // necessary to consistently work with multiple chunks via CommonsChunkPlugin
             // chunksSortMode: 'dependency'

@@ -1,6 +1,7 @@
 const path = require('path');
 const config = require('../config');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const rm = require('rimraf');
 
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -129,4 +130,30 @@ exports.styleModuleLoader = function (options){
         })
     }
     return output;
+};
+
+exports.rmProject = function (projectNames){
+    //清空对应的html、js、css
+    projectNames.forEach(function (name){
+        rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, name), err =>{
+            if ( err ) throw err;
+        });
+        rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "js/licai_h5", name), err =>{
+            if ( err ) throw err;
+        });
+        rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "css/licai_h5", name), err =>{
+            if ( err ) throw err;
+        });
+    });
+};
+exports.rmComponent = function (projectNames){
+    //清空对应的html、js、css
+    projectNames.forEach(function (name){
+        rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory,"vue_components", name), err =>{
+            if ( err ) throw err;
+        });
+        rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "js/licai_h5/vue_components", name), err =>{
+            if ( err ) throw err;
+        });
+    });
 };
