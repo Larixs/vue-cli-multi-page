@@ -1,51 +1,55 @@
 # Vue-cli + webpack的多页面应用 —— Link
 ![](./img/link.jpg)
+## 简介
+zelda是以vue-cli为基础、webpack管理的多页面应用。src下的每个子文件夹都是一个项目（称为一个子项目），代表一个独立的页面。
+
+支持vue的jsx写法。
+
+每个子项目的入口名称为app.js。
+
 ## 使用
  _____
- \# 安装 
+### 安装 
  
  npm install
-  _____
- \# 更新需要提取的第三方库
+
+_____
+### 开启dev环境进行调试
+ 
+ 调试命令： npm run dev + 子项目名称（文件夹名称，1个） + 调试端口port(可选，默认是8181)
+ 
+ 示例： npm run dev login 7171 （在7171端口调试login项目）
+_____
+### 打包
+ 
+ 构建命令： npm run build + 子项目名称（文件夹名称，可多个，以空格分隔）
+ 
+ 
+ 示例： npm run build login register (构建login、register项目)
+ 
+ \# 当index.html有变化或者需要分离的第三方库有变化时，需要进行一遍完整流程，即 npm run build:dll ->  npm run build。
+_____
+### 更新需要提取的第三方库
 
  命令：npm run build:dll
  
  1. 在build/webpack.dll.conf.js里修改所要提取的第三方库
  2. 执行 npm run build:dll 命令，生成common.js文件
  3. 执行 npm run build 命令，更新所有的html文件，使其引用新的common.js文件。
-  _____
- \# 开启dev环境进行调试
- 
- 调试命令： npm run dev 或者 npm start
- 
- 参数： 项目名称name(必需) 调试端口port(可选，默认是8181)
- 
- 示例： npm run dev login 7171 （在7171端口调试login项目）
-  _____
- \# 打包
- 
- 构建命令： npm run build 
- 
- 参数： 项目名称（可选，默认编译所有子项目）
- 
- 示例： npm run build login register (构建login、register项目)
- 
- \# 当index.html有变化或者需要分离的第三方库有变化时，需要进行一遍完整流程，即 npm run build:dll ->  npm run build。
- 
-  _____
- \# 需要在某个项目的index.html引入外部js
+_____
+### 需要在某个项目的index.html引入外部js
  
  在build/external_link.js文件里进行配置
-  _____
- \# 需要更改某个项目的index.html的title
+_____
+### 需要更改某个项目的index.html的title
  
  在build/indexPageConfig.js里配置
-  _____
- \# 将子项目作为一个组件进行编译
+_____
+### 将子项目作为一个组件进行编译
  
  npm run build:comp。挂载点的id在build/indexPageConfig.js里进行配置。编译出的html文件只包含一个挂载点和一个js文件。这个js文件包含所有逻辑代码和样式。
-  _____
- \# 清除某一个子项目(组件)打包出来的文件（不包括static文件夹下面的文件）
+_____
+### 清除某一个子项目(组件)打包出来的文件（不包括static文件夹下面的文件）
  
  npm run rm
  
@@ -56,9 +60,8 @@
  示例： 
  
     npm run rm c login //清除以组件方式打包的login项目
-    npm run rm login register p  //清除以普通方式打包的login、register项目    
-
-  _____
+    npm run rm login register p  //清除以普通方式打包的login、register项目   
+_____
  
  
 
@@ -89,5 +92,9 @@ vue：
 - 支持.vue文件
 - 支持vue的jsx写法
 
-## 有问题找橙子 (●'◡'●)
+按需加载:
+- 普通库在.babelrc里进行配置，按照[babel-import-plugin](https://github.com/ant-design/babel-plugin-import)进行配置
+- src/components里的复用组件需要按照特定的文件夹命令方式和导出方式。具体可模仿已写好的组件。
+
+## 有问题提issue (●'◡'●)
     
