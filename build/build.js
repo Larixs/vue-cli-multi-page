@@ -7,7 +7,7 @@ const path = require('path');
 const webpack = require('webpack');
 const config = require('../config');
 const webpackConfig = require("./webpack.prod.conf");
-const configEntries = require('./entry');
+const configEntries = require('./entries');
 const utils = require("./utils");
 const spinner = ora('building for production...');
 
@@ -23,8 +23,11 @@ const createPromise = function (){
 let p = createPromise();
 p.then(function (){
     //清空static
-    rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "static"), err =>{
+    rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "static/js"), err =>{
         if ( err ) throw err;
+    });
+    rm(path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "static/css"), err =>{
+      if ( err ) throw err;
     });
     //清空对应的html、js、css
     utils.rmProject(Object.keys(configEntries));
@@ -32,15 +35,7 @@ p.then(function (){
     webpack(webpackConfig, function (err, stats){
         spinner.stop();
         if ( err ) throw err;
-        process.stdout.write(stats.toString({
-                colors: true,
-                modules: false,
-                children: false,
-                chunks: false,
-                chunksModules: false
-            }) + '\n\n');
-
-        console.log(chalk.cyan('  Build complete.\n'));
+        utils.printCompileInfo(stats);
         console.log(chalk.yellow(
             '  Tip: built files are meant to be served over an HTTP server.\n' +
             '  Opening index.html over file:// won\'t work.\n'

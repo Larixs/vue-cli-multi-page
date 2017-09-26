@@ -10,7 +10,17 @@
       "import",
       [
         {
-          "libraryName": "components",
+          "libraryName": "base_components",
+          "style": false,
+          "libraryDirectory": ""
+        },
+        {
+          "libraryName": "layout",
+          "style": false,
+          "libraryDirectory": ""
+        },
+        {
+          "libraryName": "view_components",
           "style": false,
           "libraryDirectory": ""
         }
