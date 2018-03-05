@@ -5,9 +5,11 @@ const config = require("../config");
 const merge = require("webpack-merge");
 const baseWebpackConfig = require("./webpack.base.conf");
 const FileChanger = require('webpack-file-changer')
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const pageConfig = require("./page.conf");
 const srcPath = path.join(__dirname, '../src');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const rootPath = path.join(__dirname, '../');
+const time = (new Date()).getTime()
 
 
 const env = process.env.NODE_ENV === "testing"
@@ -18,10 +20,13 @@ let webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? "#source-map" : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath("vue_components/[name]/[name].js?[chunkhash]"),
-    chunkFilename: utils.assetsPath("vue_components/[id]/[id].js?[chunkhash]"),
+    filename: utils.assetsPath("vue_components/[name]/[name].js?[chunkhash]&t=" + time),
+    chunkFilename: utils.assetsPath("vue_components/[id]/[id].js?[chunkhash]&t=" + time),
   },
   plugins: [
+    new webpack.DllReferencePlugin({
+      manifest: require(path.resolve(rootPath, "common.manifest.json")),
+    }),
     new webpack.DefinePlugin({
       "process.env": env
     }),
@@ -38,6 +43,9 @@ let webpackConfig = merge(baseWebpackConfig, {
         to: path.resolve(config.build.assetsRoot, config.build.assetsSubDirectory, "static")
       }]
     }),
+    // new BundleAnalyzerPlugin({
+    //   analyzerPort: 8889
+    // })
   ]
 });
 
@@ -54,6 +62,7 @@ webpackConfig = utils.generateHtmlFile(webpackConfig, {
     removeComments: true,
   }
 })
+
 
 
 module.exports = webpackConfig;

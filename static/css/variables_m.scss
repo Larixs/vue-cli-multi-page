@@ -1,0 +1,306 @@
+//function
+@function px2rem($px) {
+  @return ($px/20) * 1rem;
+}
+
+// font-color
+$gray-1: #ffffff; // 底色
+$gray-2: #fcfcfc; // TAP背景色
+$gray-3: #f3f3f3; // 背景色
+$gray-4: #e7e7e7; // 间隔线
+$gray-5: #c7c7cc; // 灰色图标
+$gray-6: #9c9c9c; // 灰色标注 TAP文字
+$gray-7: #838383; // 正文 灰色文字
+$gray-8: #505050; // 正文 黑二级文字
+$gray-9: #36363c; // 正文 大标题文字
+$gray-10: #f8f8f8; // 卡片背景色
+$gray-11: #e7e7e7; // 点击反馈
+
+// color
+$color-0: #ffffff; // 白色
+$color-1: #d0a369; // 金渐变浅色
+$color-2: #bd8d51; // 金渐变深色
+$color-3: #a97335; // 金色主色
+$color-4: #a97335; // 金色文字
+$color-5: #f24848; // 数据红色
+$color-6: #447a2f; // 绿色数据
+$color-7: #34373c; // 标签栏
+$color-8: #b17f3e; // 点击按钮变色
+$color-9: #b78644; // 按钮颜色
+$color-10: #ebb473; // 黑色遮罩按钮
+$color-11: #e7a966; // 黑色遮罩按钮点击反馈
+$color-12: #d0a369; // 暗色背景时金色
+$color-13: #c79b52; // 渐变按钮点击反馈
+
+// font-weight
+$font-regular: normal;
+$font-meddum: 500;
+$font-bold: bold;
+
+// font-size
+$font-1: px2rem(18);
+$font-2: px2rem(17);
+$font-3: px2rem(16);
+$font-4: px2rem(15);
+$font-5: px2rem(14);
+$font-6: px2rem(13);
+$font-7: px2rem(12);
+$font-9: px2rem(10);
+
+// 间隔
+$gap-40: 40px;
+$gap-24: 24px;
+$gap-18: 18px;
+$gap-16: 16px;
+$gap-12: 12px;
+$gap-8: 8px;
+$gap-6: 6px;
+
+//mixin
+@mixin font-lighter() {
+  font-family: PingFangSC-Light, helvetica, "Heiti SC Light", "Droid Sans Light";
+}
+
+//@mixin font-medium() {
+//  font-family: PingFangSC-Medium,helvetica,'Heiti SC Medium';
+//}
+//
+//@mixin font-bold() {
+//  font-family: PingFangSC-Bold,helvetica,'Heiti SC Bold';
+//}
+
+@mixin font-medium() {
+  font-family: PingFangSC-Regular, helvetica, "Heiti SC Regular", "Droid Sans Regular";
+}
+
+@mixin font-bold() {
+  font-family: PingFangSC-Medium, helvetica, "Heiti SC Medium", "Droid Sans Medium";
+}
+
+@mixin border-radius($value) {
+  -webkit-border-radius: $value;
+  border-radius: $value;
+}
+
+@mixin transform-scale($value) {
+  -webkit-transform: scale($value);
+  transform: scale($value);
+}
+
+@mixin transform-scaleX($value) {
+  -webkit-transform: scaleX($value);
+  transform: scaleX($value);
+}
+
+@mixin transform-scaleY($value) {
+  -webkit-transform: scaleY($value);
+  transform: scaleY($value);
+}
+
+@mixin transform-scale3d($x, $y, $z) {
+  -webkit-transform: scale3d($x, $y, $z);
+  transform: scale3d($x, $y, $z);
+}
+
+@mixin transform-origin($x, $y) {
+  -webkit-transform-origin: $x $y;
+  transform-origin: $x $y;
+}
+
+@mixin box-sizing($value) {
+  -webkit-box-sizing: $value;
+  box-sizing: $value;
+}
+
+@mixin linear-gradient($dir,$startColor,$endColor) {
+  background: -webkit-linear-gradient($dir, $startColor, $endColor);
+  background: linear-gradient($dir, $startColor, $endColor);
+}
+
+@mixin one-text-ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin more-text-ellipsis($value) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $value;
+  overflow: hidden;
+}
+
+@mixin small-font-color($color, $fontSize) {
+  color: $color;
+  font-size: $fontSize;
+}
+
+@mixin stitches-sprite($x, $y) {
+  background-position: $x $y;
+}
+
+@mixin overlay-position($position, $top, $left, $right, $bottom, $background, $zIndex) {
+  position: $position;
+  top: $top;
+  left: $left;
+  right: $right;
+  bottom: $bottom;
+  background: $background;
+  z-index: $zIndex;
+  text-align: center;
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+  }
+}
+
+//高清屏1px边框
+@mixin border-top-1px($value, $left: 0, $right: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: $left;
+    right: $right;
+    border-top: $value solid $gray-4;
+    @include transform-scaleY(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-bottom-1px($value:1px, $left: 0, $right: 0, $bottom: -1px) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    border-bottom: $value solid $gray-4;
+    @include transform-scaleY(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-left-1px($value, $top: 0, $bottom: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $top;
+    left: 0;
+    bottom: $bottom;
+    border-left: $value solid $gray-4;
+    @include transform-scaleX(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-right-1px($value, $top: 0, $bottom: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $top;
+    right: 0;
+    bottom: $bottom;
+    border-right: $value solid $gray-4;
+    @include transform-scaleX(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-radius-1px($value, $radius) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: $value solid $gray-4;
+    width: 200%;
+    height: 200%;
+    @include border-radius($radius);
+    @include box-sizing(border-box);
+    @include transform-scale(.5);
+    @include transform-origin(left, top);
+  }
+}
+
+@mixin border-radius-1px-color($value, $radius , $border-color, $top: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $top;
+    left: 0;
+    border: $value solid $border-color;
+    width: 200%;
+    height: 200%;
+    @include border-radius($radius);
+    @include box-sizing(border-box);
+    @include transform-scale(.5);
+    @include transform-origin(left, top);
+  }
+}
+
+@mixin border-bottom-1px-color($value, $border-color) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-bottom: $value solid $border-color;
+    @include transform-scaleY(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-right-1px-color($value, $border-color,$top: 0, $bottom: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $top;
+    right: 0;
+    bottom: $bottom;
+    border-right: $value solid $border-color;
+    @include transform-scaleX(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin border-left-1px-color($value, $border-color,$top: 0, $bottom: 0) {
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: $top;
+    left: 0;
+    bottom: $bottom;
+    border-right: $value solid $border-color;
+    @include transform-scaleX(.5);
+    @include transform-origin(0, 0);
+  }
+}
+
+@mixin golden-button() {
+  background: -webkit-linear-gradient(-180deg, #c79b52, #e8ca8e);
+  background: linear-gradient(-90deg, #c79b52, #e8ca8e);
+  //background: -webkit-gradient(linear, 0% 0%, 100% 0%, from(#e8ca8e), to(#c79b52));
+  &:active {
+    background: #c79b52;
+  }
+}
+
+@mixin golden-button-disabled-color(){
+  background: -webkit-linear-gradient(-180deg, #e3cda8, #f3e4c6);
+  background: linear-gradient(-90deg, #e3cda8, #f3e4c6);
+} 

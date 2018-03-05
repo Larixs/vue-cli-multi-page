@@ -1,3 +1,4 @@
+process.env.NODE_ENV  = "dll"
 const webpackConfig = require("./webpack.dll.conf");
 const path = require('path');
 const dllPath = path.resolve(__dirname, '../static/js/dll');

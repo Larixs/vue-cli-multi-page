@@ -3,19 +3,59 @@
 
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="/static/img/base/favicon_licai.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+    <link rel="icon" href="/././././pf/mobile/static/img/base/favicon_licai.ico" type="image/x-icon">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover">
     <title>
         <%= htmlWebpackPlugin.options.title %>
     </title>
-    <link rel="stylesheet" href="/static/css/global.css">
-    <link rel="stylesheet" href="/static/css/mint-ui.css">
+    <script>
+      (function (doc, win){
+        var isIos = function (){
+          var ua = window.navigator.userAgent.toLowerCase();
+          if ( ua.indexOf("iphone") > -1 ) {
+            return true;
+          } else {
+            return false;
+          }
+        };
+
+        var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function (){
+            var clientWidth = docEl.clientWidth;
+            if ( !clientWidth ) return;
+            var number = clientWidth / 16
+            var setDefaultFontSize = function (){
+              if ( number > 30 ) {
+                docEl.style.fontSize = 20 + (30 - 20) * 1 + 'px';
+              } else {
+                docEl.style.fontSize = 20 + (number - 20) * 1 + 'px';
+              }
+            }
+            setDefaultFontSize()
+          };
+        recalc();
+        if ( !doc.addEventListener ) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+      })(document, window);
+    </script>
+    <script>
+      var _Promise;
+      // 检查是否iOS9+（iOS9+才支持Symbol）
+      var useNativePromise = typeof Promise === 'function' &&
+        /^(iPhone|iPad|iPod)/.test(navigator.platform) &&
+        typeof Symbol === 'function';
+      if ( useNativePromise ) {
+        _Promise = Promise;
+      }
+    </script>
+    <link rel="stylesheet" href="/././././pf/mobile/static/css/global.css">
 </head>
 
 <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
+<div id="app"></div>
+<!-- built files will be auto injected -->
 </body>
-<script src="/ga.js" async></script>
-
 </html>

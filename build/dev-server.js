@@ -1,3 +1,4 @@
+process.env.NODE_ENV = 'dev';
 const config = require('../config');
 const express = require("express");
 const webpack = require("webpack");

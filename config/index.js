@@ -1,13 +1,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path')
+var path = require('path');
 
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
+    src: path.resolve(__dirname, '../src'),
+    assetsProjectRoot: path.resolve(__dirname, '../'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: '',
-    assetsPublicPath: '/static/',
+    assetsSubDirectory: 'pf/mobile',
+    assetsPublicPath: '/././././',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -17,22 +18,18 @@ module.exports = {
     productionGzipExtensions: ['js', 'css'],
     // Run the build command with an extra argument to
     // View the bundle analyzer report after build finishes:
-    // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: false
   },
   dev: {
     env: require('./dev.env'),
     port: 8181,
     autoOpenBrowser: true,
-    assetsSubDirectory: '',
+    assetsSubDirectory: 'pf/mobile',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://192.168.4.44:22100/api',
-        // target: 'http://192.168.4.44:28100/api',
-        // target: 'http://192.168.4.44:24106/api',
-        // target: 'https://mobile.licai.com/api',
+        target: 'https://mobile.licai.com/api',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
@@ -46,4 +43,4 @@ module.exports = {
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
   }
-}
+};

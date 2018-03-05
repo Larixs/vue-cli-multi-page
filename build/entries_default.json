@@ -1,0 +1,8 @@
+{
+  "build": [
+    "test_base_comp"
+  ],
+  "build:comp": [
+    "index"
+  ]
+}

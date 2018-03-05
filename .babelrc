@@ -5,7 +5,6 @@
   ],
   "plugins": [
     "transform-vue-jsx",
-    "transform-runtime",
     [
       "import",
       [

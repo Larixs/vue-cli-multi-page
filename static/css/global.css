@@ -12,3 +12,16 @@ a:focus{
     //去掉在ff下的虚线框
     outline:0;
 }
+.clearfix:after{
+    content:'';
+    display:table;
+    clear:both;
+}
+body{
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+input:focus{
+    outline: none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+    -webkit-user-modify:read-write-plaintext-only;
+}

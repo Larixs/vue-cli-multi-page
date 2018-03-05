@@ -1,4 +1,5 @@
 //需要在webpackConfig引入之前设置。webpackConfig里涉及到了环境的判断。
+process.env.NODE_ENV = 'production:comp';
 const ora = require('ora');
 const chalk = require('chalk');
 const rm = require('rimraf');

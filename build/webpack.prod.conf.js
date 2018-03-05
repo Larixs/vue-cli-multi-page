@@ -9,13 +9,14 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const OptimizeCSSPlugin = require("optimize-css-assets-webpack-plugin");
 const rootPath = path.join(__dirname, '../');
 
-
+const time = (new Date()).getTime()
 let webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? "#source-map" : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath("[name]/[name].js?[chunkhash]"),
-    chunkFilename: utils.assetsPath("[id]/[id].js?[chunkhash]"),
+    // filename: utils.assetsPath("[name]/[name].js?[chunkhash]"),
+    filename: utils.assetsPath("[name]/[name].js?[chunkhash]&t=" + time),
+    chunkFilename: utils.assetsPath("[id]/[id].js?[chunkhash]&t=" + time),
   },
   plugins: [
     new webpack.DllReferencePlugin({
@@ -28,20 +29,20 @@ let webpackConfig = merge(baseWebpackConfig, {
       compress: {
         warnings: false
       },
-      sourceMap: false //当值为true时，会产生一个map，map的作用在于：压缩成一行后的代码如果出错了，可以用map定位到出错点。map的文件不会太小。
+      sourceMap: config.build.productionSourceMap //当值为true时，会产生一个map，map的作用在于：压缩成一行后的代码如果出错了，可以用map定位到出错点。map的文件不会太小。
     }),
     new ExtractTextPlugin({
-      filename: utils.assetsPath("[name]/[name].css?[contenthash]")
+      filename: utils.assetsPath("[name]/[name].css?[contenthash]&t="  + time)
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
     // Why optimize-css-assets-webpack-plugin instead of extract-text-webpack-plugin:
     // Since extract-text-webpack-plugin only bundles (merges) text chunks, if its used to bundle CSS, the bundle might have duplicate entries (chunks can be duplicate free but when merged, duplicate CSS can be created).
-    new OptimizeCSSPlugin({
-      cssProcessorOptions: {
-        safe: true
-      }
-    }),
+    // new OptimizeCSSPlugin({
+    //   cssProcessorOptions: {
+    //     safe: true
+    //   }
+    // }),
     //移动静态资源
     new FileChanger({
       move: [{
