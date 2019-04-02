@@ -2,11 +2,11 @@
 * Created by lai on 2017/12/14.
 */
 <template>
-  <div>
+  <div class="test-date-picker">
     <button
       @click="openDatePicker"
     >
-      basePickerBase
+      打开日期选择器
     </button>
     <DatePicker
       v-model="date"
@@ -16,7 +16,7 @@
       :startTime="startTime"
       @confirm="getDate"
     ></DatePicker>
-    <p>值：{{date}}</p>
+    <p>日期选择器的值：{{date}}</p>
   </div>
 </template>
 <script>
@@ -66,4 +66,14 @@
 </script>
 <style lang="scss" scoped>
   @import "~static/css/variables_m";
+  .test-date-picker{
+    padding: 20px 12px;
+    button{
+      padding: 4px 12px;
+      border: 1px solid transparent;
+    }
+  }
+  p{
+    margin: 10px 0;
+  }
 </style>

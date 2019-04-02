@@ -1,7 +1,7 @@
 /**
 * Created by lai
 * base-picker
-* 半受控组件（？）。可以通过selectedIndex进行控制。
+* 半受控组件（？）。需要通过selectedIndex和事件change进行控制。
 * 基础选择器。可以根据data里array的数量调整选择器的列数。本组件来自于better-scroll的示例。
 * 直接拿过来用了，里面还是有些不太理解或者说不太合理的地方。
 * 原作者使用vue的习惯在我看来不太好。譬如可能考虑到不需要对data里的某个数组进行监听，他就直接使用索引修改数据。可能不监听的数据也不注册到data里，就直接用“this.”进行初始化和修改。
@@ -38,12 +38,14 @@
           <div class="picker-choose border-bottom-1px">
             <span
               :style="btnStyleObj"
+              @touchend.prevent="cancel"
               @click="cancel"
               class="cancel"
               v-clickFeedback
             >{{cancelTxt}}</span>
             <span
               :style="btnStyleObj"
+              @touchend.prevent="confirm"
               @click="confirm"
               class="confirm"
               v-clickFeedback
@@ -319,6 +321,7 @@
   }
 </script>
 <style scoped lang="stylus" rel="stylesheet/stylus">
+
   .picker
     position: fixed
     left: 0

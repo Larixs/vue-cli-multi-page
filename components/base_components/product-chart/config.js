@@ -1,6 +1,7 @@
 /**
  * Created by lai on 2017/11/1.
  */
+//num为切割点
 const options = {
   "halfYear":{
     formatStr: "%m-%d",
@@ -14,12 +15,16 @@ const options = {
     formatStr: "%y-%m-%d",
     num: 4,
   },
+	"thisYear":{
+		formatStr: "%m-%d",
+		num: 4,
+	},
   "all":{
     formatStr: "%y-%m-%d",
     num: 4,
   }
 }
-export default function getChartConfig(data, contrastIndexName, filterType = "all"){
+export default function getChartConfig(data, chartId, contrastIndexName, filterType = "all"){
   // const productColor = "#FEA365"
   const productColor = "#FF7837"
   const gridLineColor =  '#f3f3f3'
@@ -27,7 +32,7 @@ export default function getChartConfig(data, contrastIndexName, filterType = "al
 
   const defaultConfig = {
     chart: {
-      renderTo: "chart",  // chart 元素
+      renderTo: chartId,  // chart 元素
       marginTop: 3,
       marginLeft: 40,
       style: {

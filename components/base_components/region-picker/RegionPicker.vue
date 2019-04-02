@@ -30,8 +30,10 @@
 * emit *
 * event     triggerTime                           return
 * cancel    点击“取消”按钮、点击外面的遮罩      false
-* confirm   点击“确定”触发。                    当前选定的地区。
+* confirm   点击“确定”并且值有改变时触发。      当前选定的地区。
 * input     点击“确定”触发。                    当前选定的地区。 (允许有v-model语法糖)
+
+ps: confirm触发的时机设计的不好，应该点“确定”按钮时就触发，不管当前值是否有改变，这才符合语义。但是目前没有新需求的情况下，暂时不改动。
 
 */
 <template>

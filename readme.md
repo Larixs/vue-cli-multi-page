@@ -1,47 +1,74 @@
 # Vue-cli + webpack的多页面应用 —— Zelda
 ![](./logo/zelda.jpg)
+
+## 简单介绍
+
+该项目由vue-cli魔改，为多spa集合的项目，所有的spa子项目均放在src目录下。子项目需要包含app.js才能正常启动使用。所有子项目均可单独调试及打包。
+
+项目中已有示例test_base_comp。
+
 ## npm相关命令
- _____
- **安装**
+### 安装
 
  npm install
-  _____
- **更新需要提取的第三方库**
+  
+### 开发，调试及打包
+
+1. **启动dev环境**
+    
+    命令： npm run dev + 项目名 + (端口号, 默认8181)
+    
+    示例： npm run dev test_base_comp 9191
+    
+    附注： 项目名为src文件目录下的子文件夹名称
+ 
+2. **打包** 
+
+   - 单独子项目打包
+        
+        命令： npm run build + 项目名
+        
+   - 所有子项目打包(完整带html)
+   
+        首先把需要打包的子项目的名称加到build/entries_default.json里（放在"build"的数组里），然后执行打包所有的命令。
+        
+        命令： npm run build
+
+3. **文件结构**
+
+    子项目放在src下，相应的store、私有组件等可以放在子项目下。
+    
+    公共组件至于components里。目前已对components下的base_components、view_components、layout做了按需加载的处理，所以不用考虑公共组件过多导致无用代码过多。（配置在.babelrc里）
+
+  公共组件示例： import { AuthProxy } from "base_components"
+
+
+
+### 更细致的使用
+
+**更新需要提取的第三方库**
 
  命令：npm run build:dll
 
  1. 在build/webpack.dll.conf.js里修改所要提取的第三方库
  2. 执行 npm run build:dll 命令，生成common.js文件
  3. 执行 npm run build 命令，更新`所有的`html文件，使其引用新的common.js文件。
-  _____
- **开启dev环境进行调试**
 
- 调试命令： npm run dev
+**更快启动调试和打包**
 
- 参数： 项目名称name(必需) 调试端口port(可选，默认是8181)
+在没有更新第三方库以及没有更新index.ejs时，可以使用npm run dev:sim + 项目名 命令启动调试。了解dll的作用之后，可以更灵活的修改打包命令。但是打包环境不建议通过去除dll更新来降低打包时间，这样增加了客户浏览器端缓存原因导致的dll和业务代码不匹配的风险。
 
- 示例： npm run dev login 7171 （在7171端口调试login项目）
-  _____
- **打包**
-
- 构建命令： npm run build
-
- 参数： 项目名称（可选，默认编译所有子项目）
-
- 示例： npm run build login register (构建login、register项目)
-
- `当index.html有变化或者需要分离的第三方库有变化时，需要进行一遍完整流程，即 npm run build:dll ->  npm run build。`
-
-  _____
- **需要在某个项目的index.html引入外部js、css，改变页面title**
+**需要在某个项目的index.html引入外部js、css，改变页面title**
 
  如轮播图、滑动验证等需要引入外部js时，在build/page.conf.js文件里进行配置。
-  _____
- **将所有css、js打包到1个js文件里**
 
- npm run build:comp。挂载点的id在build/page.conf.js里进行配置。编译出的html文件只包含一个Vue需要使用的挂载点和一个js文件。这个js文件包含所有js代码和css样式。
-  _____
- **清除某一个子项目(组件)打包出来的文件（不包括static文件夹下面的文件）**
+**将所有css、js打包到1个js文件里**
+
+命令：npm run build:comp
+
+详细：挂载点的id在build/page.conf.js里的app进行配置。编译出的html文件只包含一个Vue需要使用的挂载点和一个js文件。这个js文件包含所有js代码和css样式。
+  
+**清除某一个子项目(组件)打包出来的文件（不包括static文件夹下面的文件）**
 
  npm run rm
 

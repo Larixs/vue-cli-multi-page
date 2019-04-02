@@ -9,14 +9,14 @@
         :styleRules="{size: 'px', margin: '0', align: 'center', themeColor: 'gray-6'}"
       ></CategoryLabel>
     </div>
-    <!--<div class="test">-->
-      <!--<CategoryLabel-->
-        <!--:value="['测试','我是测试哈哈哈','测试测试测试']"-->
-        <!--:styleRules="{-->
-        <!--align:'center'-->
-      <!--}"-->
-      <!--&gt;</CategoryLabel>-->
-    <!--</div>-->
+    <div class="test">
+      <CategoryLabel
+        :value="['测试','我是测试哈哈哈','测试测试测试']"
+        :styleRules="{
+        align:'right'
+      }"
+      ></CategoryLabel>
+    </div>
   </div>
 </template>
 <script>
@@ -45,4 +45,8 @@
 </script>
 <style lang="scss" scoped>
   @import "~static/css/variables_m";
+  .test{
+    padding: 10px;
+    background-color: #fff;
+  }
 </style>

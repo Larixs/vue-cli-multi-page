@@ -20,7 +20,7 @@ function setAssetsPublicPath(obj) {
 
 exports.jsLink = setAssetsPublicPath({
 	test_base_comp: [
-    "pf/mobile/static/lib/highstock/highstock.js",
+    "/static/lib/highstock/highstock.js",
   ],
 });
 exports.cssLink = setAssetsPublicPath({
@@ -30,4 +30,5 @@ exports.title = {
   test_base_comp: "测试用例"
 };
 exports.defaultTitle = " ";
+exports.app = {};
 exports.defaultApp = "app";

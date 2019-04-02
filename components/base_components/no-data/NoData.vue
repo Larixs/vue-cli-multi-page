@@ -6,8 +6,8 @@
     :style="styleObj"
     class="no-data"
   >
-    <img class="no-data-img" src="~static/img/base_components/search-new/no-data.png"/>
-    <p>{{text}}</p>
+    <img class="no-data-img" :src="noDataImg"/>
+    <p :style="textStyle">{{text}}</p>
   </div>
 
 </template>
@@ -21,6 +21,13 @@
       text: {
         type: String,
         default: "暂无数据"
+      },
+      noDataImg: {
+        type: String,
+        default: imgPath + "base_components/no-data/no-data.png"
+      },
+      textStyle: {
+        type: Object
       }
     },
     components: {},
@@ -48,6 +55,8 @@
     padding: px2rem(40) 0;
     .no-data-img {
       width: 4.8rem;
+      display: block;
+      margin: 0 auto;
     }
   }
 </style>

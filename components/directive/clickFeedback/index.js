@@ -51,14 +51,12 @@ Vue.directive("clickFeedback", {
     };
     const defaultEndHandler = function() {
       // if(isInIndex){
-        console.log("touchend")
       // }
       el.style.backgroundColor = "#fff";
       // el.style.transition = oldTransition
     };
     const defaultCancelHandler = function() {
       // if(isInIndex){
-        console.log("touchcancel")
       //}
       el.style.backgroundColor = "#fff";
       // el.style.transition = oldTransition

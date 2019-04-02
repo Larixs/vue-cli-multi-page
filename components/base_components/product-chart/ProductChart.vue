@@ -13,9 +13,9 @@
 
 <template>
   <div class="chart-wrapper">
-    <div class="chart-title" v-if="isShowTitle">
+    <div class="chart-title border-bottom-1px" v-if="isShowTitle">
       <span class="left">{{chartName}}</span>
-      <span class="right">{{startTime || '--'}}至今</span>
+      <!--<span class="right">{{startTime || '&#45;&#45;'}}至今</span>-->
     </div>
     <div
       v-if="data.length > thresholdNumber"
@@ -30,7 +30,7 @@
       <div
         :style="style"
         ref="chartDOM"
-        id="chart">
+        :id="`chart-${chartId}`">
       </div>
       <div class="dataFilters border-top-1px">
         <ul class="clearfix">
@@ -61,7 +61,7 @@
   import lodash from "lodash";
   import getChartConfig from "./config.js";
   import { NoData } from "base_components";
-
+  let chartId = 0
   export default {
     name: "ProductChart",
     props: {
@@ -116,6 +116,10 @@
             name: "近三年",
             key: "threeYear"
           },
+					{
+						name: "今年以来",
+						key: "thisYear"
+					},
           {
             name: "成立以来",
             key: "all"
@@ -126,6 +130,7 @@
       };
     },
     created: function (){
+      this.chartId = chartId++
     },
     mounted: function (){
       this.$nextTick(function (){
@@ -201,7 +206,9 @@
         const time = {
           halfYear: new Date(ymd.year, ymd.month - 6, ymd.day).getTime(),
           oneYear: new Date(ymd.year - 1, ymd.month, ymd.day).getTime(),
-          threeYear: new Date(ymd.year - 3, ymd.month, ymd.day).getTime()
+          threeYear: new Date(ymd.year - 3, ymd.month, ymd.day).getTime(),
+//          thisYear: new Date(ymd.year, ymd.month*1 - (ymd.month -(ymd.month-2)), ymd.day-(ymd.day-1)).getTime()
+          thisYear: new Date(ymd.year, 0, 1).getTime()
         }; //起点
         return time;
       },
@@ -218,7 +225,7 @@
           this.filterCache[filterType] = data;
         }
         this.formattedData = data;
-        const config = getChartConfig(data, contrastIndexName, filterType);
+        const config = getChartConfig(data, `chart-${this.chartId}`, contrastIndexName, filterType);
         new Highcharts.Chart(config);
       },
       setChartHeight: function (){
@@ -325,11 +332,9 @@
   .chart-wrapper {
     background-color: #fff;
     .chart-title {
-      position: relative;
       height: 44px;
       line-height: 44px;
       text-align: left;
-      @include border-bottom-1px();
       .left {
         color: $color-4;
         height: 16px;
@@ -359,7 +364,7 @@
       padding: 11px 6px;
       li {
         float: left;
-        width: 25%;
+        width: 20%;
         text-align: center;
         font-size: $font-7;
         button {

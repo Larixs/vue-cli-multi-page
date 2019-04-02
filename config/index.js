@@ -7,7 +7,7 @@ module.exports = {
     src: path.resolve(__dirname, '../src'),
     assetsProjectRoot: path.resolve(__dirname, '../'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'pf/mobile',
+    assetsSubDirectory: '',
     assetsPublicPath: '/././././',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
@@ -25,7 +25,7 @@ module.exports = {
     env: require('./dev.env'),
     port: 8181,
     autoOpenBrowser: true,
-    assetsSubDirectory: 'pf/mobile',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {

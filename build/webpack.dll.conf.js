@@ -44,6 +44,6 @@ module.exports = {
       /moment[\/\\]locale$/,
       /en|zh-cn/
     ),
-    new BundleAnalyzerPlugin
+    // new BundleAnalyzerPlugin
   ]
 }

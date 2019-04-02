@@ -42,8 +42,8 @@ app.use(hotMiddleware);
 
 // var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 // app.use(staticPath, express.static('./static'))
-// dev启动时，在内存的虚拟文件夹/pf/mobile/static里挂载真实的static静态资源。
-app.use('/pf/mobile/static', express.static('./static'));
+// dev启动时，在内存的虚拟文件夹/static里挂载真实的static静态资源。
+app.use('/static', express.static('./static'));
 
 const uri = "http://localhost:" + port;
 

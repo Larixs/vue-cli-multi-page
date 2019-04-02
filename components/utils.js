@@ -1,10 +1,23 @@
 export {
+  gongmuAppEvent,
+  addShareButton,
+  removeShareButton,
+  shareMethod,
+  addSearchButton,
+  removeSearchButton,
+  openPdf,
+  openNativeLogin,
+} from './utils/nativeMethods.js'
+
+export {
   isApp,
   isAndroidApp,
   isIosApp,
   isIos11,
   isIos,
-  appVersion
+  isPC,
+  appVersion,
+  currentVersionIsAfter,
 } from './utils/environment.js'
 
 export {
@@ -32,3 +45,7 @@ export {
   setUserSession,
   removeUserSession,
 } from './utils/tools.js'
+
+export {
+  addWechatShare
+} from './utils/wechatMethods.js'

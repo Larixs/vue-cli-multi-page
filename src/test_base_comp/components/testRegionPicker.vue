@@ -2,7 +2,7 @@
 * Created by lai on 2017/12/27.
 */
 <template>
-  <div>
+  <div  class="test-region-picker">
     <button
       @click="openDatePicker"
     >
@@ -58,4 +58,14 @@
 </script>
 <style lang="scss" scoped>
   @import "~static/css/variables_m";
+  .test-region-picker{
+    padding: 20px 12px;
+    button{
+      padding: 4px 12px;
+      border: 1px solid transparent;
+    }
+  }
+  p{
+    margin: 10px 0;
+  }
 </style>

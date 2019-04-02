@@ -14,7 +14,7 @@
 * emit *
 * event             triggerTime                        return
 * cancel            点击“取消”按钮、点击外面的遮罩   false。
-* confirm           点击“确定”按钮                   当前选定的日期
+* confirm           点击“确定”并且值有改变时触发。   当前选定的日期
 * input:            点击“确定”按钮                   当前选定的日期（存在v-model的语法糖）
 
 */
@@ -57,7 +57,6 @@
     data(){
       let startTime = moment(this.startTime)
       let endTime = moment(this.endTime)
-      console.log(endTime)
       return {
         pickerData: [],
         selectedIndex: [0, 0, 0],

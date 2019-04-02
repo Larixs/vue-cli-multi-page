@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/dev-server.js",
-    "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
+    "dev": "node build/build-dll.js && node build/dev-server.js",
+    "dev:sim": "node build/dev-server.js",
+    "build": "node build/build-dll.js && node build/build.js",
     "build:dll": "node build/build-dll.js",
-    "build:comp": "node build/build-component.js",
+    "build:comp": "node build/build-dll.js && node build/build-component.js",
     "rm": "node build/rm-project.js",
-    "build:all": "node build/build.js && node build/build-component.js "
+    "build:all": "node build/build-dll.js && node build/build.js && node build/build-component.js "
   },
   "author": "",
   "license": "ISC",

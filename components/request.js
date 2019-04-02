@@ -4,13 +4,10 @@
 
 
 import axios from "axios";
-import { Toast } from "base_components";
 import 'whatwg-fetch'
 
 const checkNetworkStatus = response => {
   // window.fetchQueue.pop()
-  // console.log('request checkNetworkStatus')
-  // console.log(response)
   if (response.status >= 200 && response.status < 300) {
     return response;
   } else if (response.status >= 500 && response.status < 600) {
@@ -25,7 +22,6 @@ const checkNetworkStatus = response => {
 };
 
 // const checkApiStatus = (response, config) => {
-//   // console.log('request checkApiStatus')
 //   const { allApiStatus, ignoreApiStatus } = config;
 //   let _apiStatus = [0, 1004, 7001]
 //   return response.json().then(data => {
@@ -74,9 +70,9 @@ const showNotification = err => {
   console.log(err);
   console.log(err.message);
   if (err.message === 'Type error' || err.message === 'Failed to fetch') {
-    Toast('网络异常，请稍后再试')
+    console.log('网络异常，请稍后再试')
   } else {
-    Toast(err.message);
+    console.log(err.message);
   }
 
   // 在这里再次抛出错误的原因是需要在具体的组件里
@@ -131,7 +127,6 @@ export default {
     //     // console.log('return data')
     //     return data
     //   }).catch(showNotification);
-    console.log("options in request post", options)
     return axios
       .post(url, options)
       .then(response => checkNetworkStatus(response, config))
@@ -187,7 +182,6 @@ export default {
       .catch(showNotification);
   },
   patch(url, params, config = {}) {
-    // // console.log('request get')
     // window.fetchQueue = window.fetchQueue || []
     // window.fetchQueue.push(true)
     // const _params = params.params || {}

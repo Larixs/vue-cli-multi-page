@@ -72,7 +72,7 @@ let webpackConfig = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      imgPath: '"/././././pf/mobile/static/img/"'
+      imgPath: '"/././././static/img/"'
     }),
     new plugins.PutExternalFileInHtml()
   ],

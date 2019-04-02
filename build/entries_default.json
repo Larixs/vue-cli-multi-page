@@ -3,6 +3,6 @@
     "test_base_comp"
   ],
   "build:comp": [
-    "index"
+    "test_base_comp"
   ]
 }
